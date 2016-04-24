@@ -35,9 +35,15 @@ public class MeuInterceptador {
         Log annotation = ctx.getMethod().getAnnotation(Log.class);
         boolean deveRegistrar = annotation.registrar();
         
-        LOG.log(Level.INFO, "{0} executado.", ctx.getMethod().getName());
+        if (deveRegistrar) {
+            LOG.log(Level.INFO, "{0} executado.", ctx.getMethod().getName());
+        }
+        
         Object resultado = ctx.proceed();
-        LOG.log(Level.INFO, "P\u00e1gina de destino: {0}", resultado.toString());
+        if (deveRegistrar) {
+            LOG.log(Level.INFO, "P\u00e1gina de destino: {0}", resultado.toString());
+        }
+        
         return resultado;
     }
 }
